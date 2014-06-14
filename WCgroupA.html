@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+</head>
+<body>
+<script type="text/javascript">
+# This script runs the php file that fetches data. This html file and the php file are located in the same folder on the same server.
+	var url = "WCgroupA.php";
+	var xhr = new XMLHttpRequest;
+# Wait until the request is ready.
+	xhr.onreadystatechange = function() {
+	  if (xhr.readyState === 4)  { 
+		var serverResponse = xhr.responseText;
+# Parse the response, which is in JSON format.
+		obj = JSON.parse(serverResponse);
+# Loop through the response, and publish team names, match score or whatever you want, as text and HTML. Of course, you should format this as you like.
+		for (i=0;i<10;i++){
+			document.write(obj.events[i].homeTeam.name);
+			document.write(" ");
+			if (obj.events[i].homeTeamScore != undefined){
+				document.write(obj.events[i].homeTeamScore);
+			}
+			document.write(" - ");
+			document.write(obj.events[i].visitingTeam.name);
+			document.write(" ");
+			if (obj.events[i].visitingTeamScore != undefined){
+				document.write(obj.events[i].visitingTeamScore);
+			}
+			document.write("<br>");
+		}
+	  }
+	};
+# Nothing happens before these lines run.
+	xhr.open("GET", url, true);
+	xhr.send();
+</script>
+</body>
+</html>
